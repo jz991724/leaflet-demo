@@ -28,14 +28,14 @@ export default {
     //添加瓦片图层（作为底图备选）
     let openstreetmapLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(this.mainMap);
     let somedomainLayer = L.tileLayer('http://{s}.somedomain.com/{foo}/{z}/{x}/{y}.png', {foo: 'bar'});
-    // 定义一个底图(注意：小地图的layer不能和地图上共用一个，否则无法加载)
+    // 定义一个图层(注意：小地图的layer不能和地图上共用一个，否则无法加载)
     const minilayer = L.tileLayer(`https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}`);
 
     let centerPointMarker = L.marker([25, 102.7], {title: '这是一个标记', draggable: true}).addTo(this.mainMap);
 
     debugger
     centerPointMarker.bindPopup('等风来');
-
+    //
     let circle = L.circle(this.centerLatLng, {radius: 100, fillColor: 'red'});
 
     let littleton = L.marker([25.61, 102.7]).bindPopup('This is Littleton, CO.');
@@ -44,10 +44,10 @@ export default {
     let golden = L.marker([25.61, 102.73]).bindPopup('This is Golden, CO.');
 
     //相当于arcgis的featureLayer
-    let layerGroup = L.featureGroup([circle, littleton, denver, aurora, golden]);
-    layerGroup.addTo(this.mainMap);
+    let featureGroup = L.featureGroup([circle, littleton, denver, aurora, golden]);
+    featureGroup.addTo(this.mainMap);
     //聚焦所有的marker
-    let bound = layerGroup.getBounds();
+    let bound = featureGroup.getBounds();
     this.mainMap.fitBounds(bound);
 
     //基础底图（每次只能有一个）
@@ -64,7 +64,7 @@ export default {
       // aurora,
       // golden,
 
-      '<i style="color:red;">layerGroup</i>': layerGroup
+      '<i style="color:red;">layerGroup</i>': featureGroup
     };
 
     //添加图层管理组件
