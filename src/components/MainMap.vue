@@ -4,6 +4,7 @@
 
 <script>
 import MiniMap from 'leaflet-minimap';
+import 'leaflet-ajax';
 import "leaflet-minimap/dist/Control.MiniMap.min.css";
 
 export default {
@@ -94,9 +95,14 @@ export default {
     let customIconMarker = L.marker([25.2, 102.7], {icon: myIcon}).addTo(this.mainMap);
     customIconMarker.bindPopup('<i style="color:blue;">我现在就在这里，<b style="color: red;">你来打我呀</b></i>');
     //默认打开popup
-    setTimeout(()=>{
+    setTimeout(() => {
       customIconMarker.openPopup();
     });
+
+    //加载geoJson数据
+    //要先引用import一下leaflet-ajax才能覆盖leaflet带的L.GeoJSON.AJAX
+    let geoJsonLayer = new L.GeoJSON.AJAX("https://geo.datav.aliyun.com/areas_v3/bound/530000_full.json");
+    geoJsonLayer.addTo(this.mainMap);
   }
 }
 </script>

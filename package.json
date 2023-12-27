@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "leaflet": "^1.9.4",
+    "leaflet-ajax": "^2.1.0",
     "leaflet-minimap": "^3.6.1",
     "leaflet.pm": "^2.2.0",
     "vue": "^2.6.14"
