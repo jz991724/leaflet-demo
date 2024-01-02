@@ -101,7 +101,18 @@ export default {
 
     //加载geoJson数据
     //要先引用import一下leaflet-ajax才能覆盖leaflet带的L.GeoJSON.AJAX
-    let geoJsonLayer = new L.GeoJSON.AJAX("https://geo.datav.aliyun.com/areas_v3/bound/530000_full.json");
+    let geoJsonLayer = new L.GeoJSON.AJAX("https://geo.datav.aliyun.com/areas_v3/bound/530000_full.json", {
+      style: {
+        color: 'red'
+      }, onEachFeature: (feature, layer) => {
+        //为每一个feature要素添加label（这里就是显示行政区的名称）
+        let latlng = layer?.getBounds().getCenter();
+        if (latlng) {
+          let div_icon = L.divIcon({html: feature?.properties?.name || '', iconSize: [100], className: 'divIconLabel'});
+          L.marker(latlng, {icon: div_icon}).addTo(this.mainMap);
+        }
+      }
+    });
     geoJsonLayer.addTo(this.mainMap);
   }
 }
@@ -112,5 +123,11 @@ export default {
 #mainMap {
   width: 100vw;
   height: 100vh;
+}
+
+/deep/ .divIconLabel {
+  font-size: 24px;
+  font-weight: bolder;
+  color: blue;
 }
 </style>
